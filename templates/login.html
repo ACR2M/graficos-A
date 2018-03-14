@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Nortech | Login</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+  <link rel="stylesheet" href="static/css/login.css">
+  <link rel="stylesheet" href="/static/css/lib/bootstrap.min.css">
+</head>
+<body>
+
+  <div class="wrapper">
+    <form class="form-signin" method="post">
+      <h2 class="form-signin-heading ">Login</h2>
+
+      {% if err %}
+      <p class="alert alert-danger"><strong>Error:</strong> {{ err }}</p>
+      {% endif %}
+      {% for message in get_flashed_messages() %}
+        <p class="alert alert-danger">{{ message }} </p>
+
+      {% endfor %}
+
+      <div class="inner-addon left-addon">
+        <label class="control-label">Username</label>
+          <input type="text" class="form-control" value="{{request.form.username}}" name="username" placeholder="Username" required="" autofocus=""/>
+      </div>
+      <div class="inner-addon left-addon">
+         <label class="control-label">Password</label>
+          <input type="password" class="form-control" value="{{request.form.password}}" name="password" placeholder="password" required="" autofocus=""/>
+      </div>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+      <a class="forgot-password" href="/">Go back to the homepage</a>  
+    </form>
+  </div>
+
+  <script src="/static/js/lib/jquery-3.3.1.min.js" ></script>
+  <script src="/static/js/lib/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sissa</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    <link rel="stylesheet" href="static/css/index.css">
+    <link rel="stylesheet" href="/static/css/lib/bootstrap.min.css">
+</head>
+<body>
+
+{% block content %}{% endblock %}
+
+<script src="/static/js/lib/jquery-3.3.1.min.js"></script>
+<script src="/static/js/lib/bootstrap.bundle.min.js"></script>
+<script src="/static/js/lib/Chart.bundle.min.js"></script>
+<script type="application/javascript" src="static/js/index.js"></script>
+
+<script>
+    var p = document.getElementById('myChart').getContext('2d');
+    var e = document.getElementById('Chart').getContext('2d');
+
+    var lista_nombres = [{% for row in header %}
+        "{{ row }}",
+    {% endfor %}];
+    var lista_produccion = [{% for row in production %}
+        "{{ row }}",
+    {% endfor %}];
+    var lista_l1 = [{% for row in tipo1 %}
+        "{{ row }}",
+    {% endfor %}];
+    var lista_l2 = [{% for row in tipo2 %}
+        "{{ row }}",
+    {% endfor %}];
+
+    var indice = 0;
+    var myvar = setInterval(grafico_produccion, 3000);
+
+    function grafico_produccion() {
+        var mychart = new Chart(p, {
+            type: 'bar',
+
+            data: {
+                labels: [lista_nombres[indice]],
+                datasets: [{
+                    label: "Produccion",
+                    backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: [lista_produccion[indice]],
+                }]
+            },
+
+            options: {responsive: true,}
+        });
+
+        var mychart2 = new Chart(e, {
+
+            type: 'line',
+
+            data: {
+                labels: ["0", lista_nombres[indice].substring(0,23).concat("..."), "0"],
+                datasets: [{
+                    label: "L1",
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: [0, lista_l1[indice], 0],
+                },
+                    {
+                        label: "L2",
+                        borderColor: '#007bff',
+                        data: [0, lista_l2[indice], 0],
+                    }]
+            },
+
+            options: {
+                responsive: true,
+            }
+        });
+
+        indice++;
+        if (indice > lista_nombres.length()) indice = 0;
+    };
+
+</script>
+</body>
+</html>
